@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Expense, PaginatedExpensesResponse } from "@shared/api";
+import Footer from "@/components/Footer";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Index() {
   // Estados para los datos de los gastos y el formulario
@@ -54,8 +56,14 @@ export default function Index() {
           description: "Transporte",
           dateRecorded: new Date().toISOString(),
         },
+        {
+          id: 3,
+          amount: 120.0,
+          description: "Compras del supermercado",
+          dateRecorded: new Date(Date.now() - 86400000).toISOString(),
+        },
       ]);
-      setTotalItemsGlobal(2);
+      setTotalItemsGlobal(3);
       setLastPage(1);
     } finally {
       setIsLoading(false);
@@ -117,12 +125,41 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/20 to-secondary">
+      {/* Header con toggle de tema */}
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-border">
+        <div className="container mx-auto px-4 py-4 max-w-6xl">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-br from-expense-500 to-expense-600 rounded-xl shadow-sm">
+                <svg
+                  className="h-6 w-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                  />
+                </svg>
+              </div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-expense-600 to-expense-700 bg-clip-text text-transparent">
+                Rastreador de Gastos
+              </h1>
+            </div>
+            <ThemeToggle />
+          </div>
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Header */}
+        {/* Header principal */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-lg">
+            <div className="p-3 bg-gradient-to-br from-expense-500 to-expense-600 rounded-2xl shadow-lg">
               <svg
                 className="h-8 w-8 text-white"
                 fill="none"
@@ -137,11 +174,11 @@ export default function Index() {
                 />
               </svg>
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">
-              Rastreador de Gastos
-            </h1>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-expense-600 to-expense-700 bg-clip-text text-transparent">
+              Tu Panel de Control
+            </h2>
           </div>
-          <p className="text-gray-600 text-lg">
+          <p className="text-muted-foreground text-lg">
             Gestiona tus gastos de manera inteligente y eficiente
           </p>
         </div>
@@ -149,9 +186,9 @@ export default function Index() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Formulario para añadir gastos */}
           <div className="lg:col-span-1">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-xl border-0 overflow-hidden">
-              <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6">
-                <h2 className="text-xl font-semibold flex items-center gap-2">
+            <div className="bg-card/80 backdrop-blur-sm rounded-xl shadow-xl border border-border overflow-hidden">
+              <div className="bg-gradient-to-r from-expense-500 to-expense-600 text-white p-6">
+                <h3 className="text-xl font-semibold flex items-center gap-2">
                   <svg
                     className="h-5 w-5"
                     fill="none"
@@ -166,17 +203,17 @@ export default function Index() {
                     />
                   </svg>
                   Nuevo Gasto
-                </h2>
-                <p className="text-purple-100 text-sm mt-1">
+                </h3>
+                <p className="text-expense-100 text-sm mt-1">
                   Añade un nuevo gasto a tu registro
                 </p>
               </div>
               <div className="p-6">
                 <form onSubmit={handleAddExpense} className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium flex items-center gap-2 text-gray-700">
+                    <label className="text-sm font-medium flex items-center gap-2 text-foreground">
                       <svg
-                        className="h-4 w-4 text-purple-500"
+                        className="h-4 w-4 text-expense-500"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -198,11 +235,11 @@ export default function Index() {
                       step="0.01"
                       min="0.01"
                       required
-                      className="w-full px-3 py-2 text-lg font-mono border border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                      className="w-full px-3 py-2 text-lg font-mono bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-input"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">
+                    <label className="text-sm font-medium text-foreground">
                       Descripción
                     </label>
                     <input
@@ -212,12 +249,12 @@ export default function Index() {
                       onChange={(e) => setDescription(e.target.value)}
                       required
                       maxLength={50}
-                      className="w-full px-3 py-2 border border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                      className="w-full px-3 py-2 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-input"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-medium py-3 px-4 rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+                    className="w-full bg-gradient-to-r from-expense-500 to-expense-600 hover:from-expense-600 hover:to-expense-700 text-white font-medium py-3 px-4 rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
                   >
                     <svg
                       className="h-4 w-4"
@@ -240,11 +277,11 @@ export default function Index() {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 gap-4 mt-6">
-              <div className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-lg p-4">
+              <div className="bg-card/80 backdrop-blur-sm border border-border shadow-lg rounded-lg p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 rounded-lg">
+                  <div className="p-2 bg-expense-100 dark:bg-expense-900 rounded-lg">
                     <svg
-                      className="h-5 w-5 text-purple-600"
+                      className="h-5 w-5 text-expense-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -258,11 +295,13 @@ export default function Index() {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-gray-600">Total Página Actual</p>
+                    <p className="text-sm text-muted-foreground">
+                      Total Página Actual
+                    </p>
                     {isLoading ? (
-                      <div className="h-6 bg-purple-100 rounded animate-pulse"></div>
+                      <div className="h-6 bg-muted rounded animate-pulse"></div>
                     ) : (
-                      <p className="text-xl font-bold text-purple-700">
+                      <p className="text-xl font-bold text-expense-700">
                         ${totalExpensesOnCurrentPage.toFixed(2)}
                       </p>
                     )}
@@ -270,11 +309,11 @@ export default function Index() {
                 </div>
               </div>
 
-              <div className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-lg p-4">
+              <div className="bg-card/80 backdrop-blur-sm border border-border shadow-lg rounded-lg p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-100 rounded-lg">
+                  <div className="p-2 bg-success/10 rounded-lg">
                     <svg
-                      className="h-5 w-5 text-green-600"
+                      className="h-5 w-5 text-success"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -288,11 +327,13 @@ export default function Index() {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-gray-600">Total Registros</p>
+                    <p className="text-sm text-muted-foreground">
+                      Total Registros
+                    </p>
                     {isLoading ? (
-                      <div className="h-6 bg-purple-100 rounded animate-pulse"></div>
+                      <div className="h-6 bg-muted rounded animate-pulse"></div>
                     ) : (
-                      <p className="text-xl font-bold text-green-600">
+                      <p className="text-xl font-bold text-success">
                         {totalItemsGlobal}
                       </p>
                     )}
@@ -304,21 +345,21 @@ export default function Index() {
 
           {/* Lista de gastos */}
           <div className="lg:col-span-2">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-xl border-0 overflow-hidden">
-              <div className="p-6 border-b border-gray-100">
+            <div className="bg-card/80 backdrop-blur-sm rounded-xl shadow-xl border border-border overflow-hidden">
+              <div className="p-6 border-b border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
-                    <h2 className="text-2xl font-semibold text-gray-900">
+                    <h3 className="text-2xl font-semibold text-foreground">
                       Mis Gastos
-                    </h2>
-                    <p className="text-gray-600">
+                    </h3>
+                    <p className="text-muted-foreground">
                       Página {currentPage} de {lastPage}
                     </p>
                   </div>
 
                   {/* Buscador */}
                   <div className="relative max-w-sm">
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                       <svg
                         className="h-4 w-4"
                         fill="none"
@@ -337,12 +378,12 @@ export default function Index() {
                       placeholder="Buscar gastos..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-10 py-2 border border-purple-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                      className="w-full pl-10 pr-10 py-2 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-input"
                     />
                     {searchTerm && (
                       <button
                         onClick={() => setSearchTerm("")}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
                       >
                         <svg
                           className="h-4 w-4"
@@ -369,14 +410,14 @@ export default function Index() {
                     {Array.from({ length: 3 }).map((_, i) => (
                       <div
                         key={i}
-                        className="flex items-center gap-4 p-4 border rounded-lg"
+                        className="flex items-center gap-4 p-4 border border-border rounded-lg"
                       >
-                        <div className="h-10 w-10 bg-purple-100 rounded-full animate-pulse"></div>
+                        <div className="h-10 w-10 bg-muted rounded-full animate-pulse"></div>
                         <div className="flex-1 space-y-2">
-                          <div className="h-4 bg-purple-100 rounded animate-pulse"></div>
-                          <div className="h-3 bg-purple-50 rounded animate-pulse w-2/3"></div>
+                          <div className="h-4 bg-muted rounded animate-pulse"></div>
+                          <div className="h-3 bg-muted rounded animate-pulse w-2/3"></div>
                         </div>
-                        <div className="h-6 w-20 bg-purple-100 rounded animate-pulse"></div>
+                        <div className="h-6 w-20 bg-muted rounded animate-pulse"></div>
                       </div>
                     ))}
                   </div>
@@ -385,7 +426,7 @@ export default function Index() {
                     {filteredExpenses.length === 0 && searchTerm ? (
                       <div className="text-center py-12">
                         <svg
-                          className="h-12 w-12 text-gray-400 mx-auto mb-4"
+                          className="h-12 w-12 text-muted-foreground mx-auto mb-4"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -397,7 +438,7 @@ export default function Index() {
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                           />
                         </svg>
-                        <p className="text-gray-600">
+                        <p className="text-muted-foreground">
                           No se encontraron gastos que coincidan con su
                           búsqueda.
                         </p>
@@ -405,7 +446,7 @@ export default function Index() {
                     ) : totalItemsGlobal === 0 ? (
                       <div className="text-center py-12">
                         <svg
-                          className="h-12 w-12 text-gray-400 mx-auto mb-4"
+                          className="h-12 w-12 text-muted-foreground mx-auto mb-4"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -417,7 +458,7 @@ export default function Index() {
                             d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
                           />
                         </svg>
-                        <p className="text-gray-600">
+                        <p className="text-muted-foreground">
                           No hay gastos registrados. ¡Empieza a añadir algunos!
                         </p>
                       </div>
@@ -430,9 +471,9 @@ export default function Index() {
                                 ? expense.id
                                 : `${expense.description || "no-desc"}-${index}-${Math.random()}`
                             }
-                            className="group flex items-center gap-4 p-4 border border-gray-200 rounded-xl hover:shadow-md transition-all duration-200 hover:border-purple-200 bg-gradient-to-r from-white to-purple-50/30"
+                            className="group flex items-center gap-4 p-4 border border-border rounded-xl hover:shadow-md transition-all duration-200 hover:border-expense-200 bg-gradient-to-r from-card to-expense-50/30 dark:to-expense-950/30"
                           >
-                            <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full shadow-sm">
+                            <div className="p-3 bg-gradient-to-br from-expense-500 to-expense-600 rounded-full shadow-sm">
                               <svg
                                 className="h-5 w-5 text-white"
                                 fill="none"
@@ -449,12 +490,12 @@ export default function Index() {
                             </div>
 
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-gray-900 truncate">
+                              <p className="font-medium text-foreground truncate">
                                 {expense.description}
                               </p>
                               <div className="flex items-center gap-2 mt-1">
                                 <svg
-                                  className="h-3 w-3 text-gray-400"
+                                  className="h-3 w-3 text-muted-foreground"
                                   fill="none"
                                   stroke="currentColor"
                                   viewBox="0 0 24 24"
@@ -466,7 +507,7 @@ export default function Index() {
                                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                   />
                                 </svg>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-muted-foreground">
                                   {expense.dateRecorded &&
                                   !isNaN(
                                     new Date(expense.dateRecorded).getTime(),
@@ -484,7 +525,7 @@ export default function Index() {
                             </div>
 
                             <div className="flex items-center gap-3">
-                              <span className="bg-gray-100 text-gray-900 text-base font-bold px-3 py-1 rounded-md">
+                              <span className="bg-secondary text-secondary-foreground text-base font-bold px-3 py-1 rounded-md">
                                 $
                                 {typeof expense.amount === "number"
                                   ? expense.amount.toFixed(2)
@@ -493,7 +534,7 @@ export default function Index() {
 
                               <button
                                 onClick={() => handleDeleteExpense(expense.id)}
-                                className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-lg"
+                                className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-destructive hover:text-destructive/80 p-2 hover:bg-destructive/10 rounded-lg"
                               >
                                 <svg
                                   className="h-4 w-4"
@@ -521,6 +562,8 @@ export default function Index() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
