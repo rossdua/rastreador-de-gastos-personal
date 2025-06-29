@@ -10,3 +10,20 @@
 export interface DemoResponse {
   message: string;
 }
+
+/**
+ * Expense tracker interfaces
+ */
+export interface Expense {
+  id: number;
+  amount: number;
+  description: string;
+  dateRecorded: string;
+}
+
+export interface PaginatedExpensesResponse {
+  data: Expense[];
+  total: number;
+  page: number;
+  lastPage: number;
+}
