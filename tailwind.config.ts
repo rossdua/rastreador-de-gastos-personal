@@ -57,6 +57,23 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        expense: {
+          50: "hsl(var(--expense-50))",
+          100: "hsl(var(--expense-100))",
+          200: "hsl(var(--expense-200))",
+          300: "hsl(var(--expense-300))",
+          400: "hsl(var(--expense-400))",
+          500: "hsl(var(--expense-500))",
+          600: "hsl(var(--expense-600))",
+          700: "hsl(var(--expense-700))",
+          800: "hsl(var(--expense-800))",
+          900: "hsl(var(--expense-900))",
+          950: "hsl(var(--expense-950))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
