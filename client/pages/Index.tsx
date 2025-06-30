@@ -163,17 +163,45 @@ export default function Index() {
       return;
     }
 
-    const newExpense: Expense = {
-      id: Date.now(),
-      amount: Number(amount),
-      description,
-      dateRecorded: new Date().toISOString(),
-    };
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: Number(amount), description }),
+      });
 
-    setExpenses((prev) => [newExpense, ...prev]);
-    setTotalItemsGlobal((prev) => prev + 1);
-    setAmount("");
-    setDescription("");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      setAmount("");
+      setDescription("");
+      // Volver a la primera página después de agregar un nuevo gasto
+      setCurrentPage(1);
+      fetchExpenses();
+    } catch (error) {
+      console.error("Error al añadir gasto:", error);
+      // Fallback: agregar localmente si no hay backend
+      const newExpense: Expense = {
+        id: Date.now(),
+        amount: Number(amount),
+        description,
+        dateRecorded: new Date().toISOString(),
+      };
+
+      setExpenses((prev) => {
+        const newList = [newExpense, ...prev];
+        // Mantener solo los elementos de la página actual
+        return newList.slice(0, itemsPerPage);
+      });
+      setTotalItemsGlobal((prev) => prev + 1);
+      setLastPage(Math.ceil((totalItemsGlobal + 1) / itemsPerPage));
+      setAmount("");
+      setDescription("");
+      setCurrentPage(1); // Ir a la primera página para ver el nuevo gasto
+    }
   };
 
   // Manejador para eliminar un gasto
