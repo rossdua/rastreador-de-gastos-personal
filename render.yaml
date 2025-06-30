@@ -1,5 +1,4 @@
 services:
-  # Servidor principal (Frontend + Backend integrado)
   - type: web
     name: rastreador-gastos
     runtime: node
@@ -15,7 +14,6 @@ services:
     healthCheckPath: /
     autoDeploy: true
 
-  # Servidor de base de datos (PostgreSQL) - Opcional
   - type: pserv
     name: rastreador-gastos-db
     plan: free
@@ -28,7 +26,6 @@ services:
     postgresMajorVersion: "16"
   version: "1"
 
-# Variables de entorno globales (opcionales)
 envVarGroups:
   - name: app-settings
     envVars:
