@@ -618,6 +618,120 @@ export default function Index() {
                     )}
                   </>
                 )}
+
+                {/* Controles de Paginación */}
+                {lastPage > 1 && (
+                  <div className="mt-8 pt-6 border-t border-border">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground">
+                        Mostrando{" "}
+                        <span className="font-medium">
+                          {(currentPage - 1) * itemsPerPage + 1}
+                        </span>{" "}
+                        -{" "}
+                        <span className="font-medium">
+                          {Math.min(
+                            currentPage * itemsPerPage,
+                            totalItemsGlobal,
+                          )}
+                        </span>{" "}
+                        de{" "}
+                        <span className="font-medium">{totalItemsGlobal}</span>{" "}
+                        gastos
+                      </p>
+
+                      <div className="flex items-center gap-2">
+                        {/* Botón Anterior */}
+                        <button
+                          onClick={() => setCurrentPage(currentPage - 1)}
+                          disabled={currentPage === 1 || isLoading}
+                          className="flex items-center gap-2 px-3 py-2 text-sm bg-background border border-input rounded-lg hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                          <svg
+                            className="h-4 w-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15 19l-7-7 7-7"
+                            />
+                          </svg>
+                          Anterior
+                        </button>
+
+                        {/* Números de página */}
+                        <div className="flex gap-1">
+                          {Array.from(
+                            { length: lastPage },
+                            (_, i) => i + 1,
+                          ).map((pageNum) => {
+                            // Mostrar solo algunas páginas alrededor de la actual
+                            if (
+                              pageNum === 1 ||
+                              pageNum === lastPage ||
+                              (pageNum >= currentPage - 1 &&
+                                pageNum <= currentPage + 1)
+                            ) {
+                              return (
+                                <button
+                                  key={pageNum}
+                                  onClick={() => setCurrentPage(pageNum)}
+                                  disabled={isLoading}
+                                  className={`h-9 w-9 text-sm rounded-lg transition-colors ${
+                                    currentPage === pageNum
+                                      ? "bg-expense-500 text-white shadow-sm"
+                                      : "bg-background border border-input hover:bg-accent hover:text-accent-foreground"
+                                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                                >
+                                  {pageNum}
+                                </button>
+                              );
+                            } else if (
+                              pageNum === currentPage - 2 ||
+                              pageNum === currentPage + 2
+                            ) {
+                              return (
+                                <span
+                                  key={pageNum}
+                                  className="h-9 w-9 flex items-center justify-center text-sm text-muted-foreground"
+                                >
+                                  ...
+                                </span>
+                              );
+                            }
+                            return null;
+                          })}
+                        </div>
+
+                        {/* Botón Siguiente */}
+                        <button
+                          onClick={() => setCurrentPage(currentPage + 1)}
+                          disabled={currentPage === lastPage || isLoading}
+                          className="flex items-center gap-2 px-3 py-2 text-sm bg-background border border-input rounded-lg hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                          Siguiente
+                          <svg
+                            className="h-4 w-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
