@@ -21,9 +21,3 @@ databases:
     databaseName: gastos_db_k2w7
     user: gastos_user
     ipAllowList: []
-
-envVars:
-   - key: DATABASE_URL
-     fromDatabase:
-       name: rastreador-gastos-db
-       property: connectionString
