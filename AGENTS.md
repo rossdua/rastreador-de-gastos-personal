@@ -1,164 +1,175 @@
 # Fusion Starter
 
-A production-ready full-stack React application template with integrated Express server, featuring React Router 6 SPA mode, TypeScript, Vitest, Zod and modern tooling.
+Una plantilla de aplicación React full-stack lista para producción con servidor Express integrado, que incluye React Router 6 en modo SPA, TypeScript, Vitest, Zod y herramientas modernas.
 
-While the starter comes with a express server, only create endpoint when strictly neccesary, for example to encapsulate logic that must leave in the server, such as private keys handling, or certain DB operations, db...
+Aunque el starter viene con un servidor express, solo crea endpoints cuando sea estrictamente necesario, por ejemplo para encapsular lógica que debe permanecer en el servidor, como manejo de claves privadas, o ciertas operaciones de DB, base de datos...
 
-## Tech Stack
+## Stack Tecnológico
 
 - **Frontend**: React 18 + React Router 6 (spa) + TypeScript + Vite + TailwindCSS 3
-- **Backend**: Express server integrated with Vite dev server
-- **Testing**: Vitest
-- **UI**: Radix UI + TailwindCSS 3 + Lucide React icons
+- **Backend**: Servidor Express integrado con servidor de desarrollo Vite
+- **Pruebas**: Vitest
+- **UI**: Radix UI + TailwindCSS 3 + iconos de Lucide React
 
-## Project Structure
+## Estructura del Proyecto
 
 ```
-client/                   # React SPA frontend
-├── pages/                # Route components (Index.tsx = home)
-├── components/ui/        # Pre-built UI component library
-├── main.tsx              # App entry piint and with SPA routing setup
-└── global.css            # TailwindCSS 3 theming and global styles
+client/                   # Frontend React SPA
+├── pages/                # Componentes de rutas (Index.tsx = inicio)
+├── components/ui/        # Biblioteca de componentes UI pre-construidos
+├── main.tsx              # Punto de entrada de la app y configuración de enrutamiento SPA
+└── global.css            # Temas de TailwindCSS 3 y estilos globales
 
-server/                   # Express API backend
-├── index.ts              # Main server setup (express config + routes)
-└── routes/               # API handlers
+server/                   # Backend API Express
+├── index.ts              # Configuración principal del servidor (config express + rutas)
+└── routes/               # Manejadores de API
 
-shared/                   # Types used by both client & server
-└── api.ts                # Example of how to share api interfaces
+shared/                   # Tipos usados por cliente y servidor
+└── api.ts                # Ejemplo de cómo compartir interfaces de api
 ```
 
-## Key Features
+## Características Principales
 
-## SPA Routing System
+## Sistema de Enrutamiento SPA
 
-The routing system is powered by React Router 6:
+El sistema de enrutamiento está impulsado por React Router 6:
 
-- `client/pages/Index.tsx` represents the home page.
-- Routes are defined in `client/App.tsx` using the `react-router-dom` import
-- Route files are located in the `client/pages/` directory
+- `client/pages/Index.tsx` representa la página de inicio.
+- Las rutas se definen en `client/App.tsx` usando la importación de `react-router-dom`
+- Los archivos de rutas están ubicados en el directorio `client/pages/`
 
-For example, routes can be defined with:
+Por ejemplo, las rutas se pueden definir con:
 
 ```typescript
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 <Routes>
   <Route path="/" element={<Index />} />
-  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+  {/* AGREGAR TODAS LAS RUTAS PERSONALIZADAS ARRIBA DE LA RUTA CATCH-ALL "*" */}
   <Route path="*" element={<NotFound />} />
 </Routes>;
 ```
 
-### Styling System
+### Sistema de Estilos
 
-- **Primary**: TailwindCSS 3 utility classes
-- **Theme and design tokens**: Configure in `client/global.css` 
-- **UI components**: Pre-built library in `client/components/ui/`
-- **Utility**: `cn()` function combines `clsx` + `tailwind-merge` for conditional classes
+- **Primario**: Clases utilitarias de TailwindCSS 3
+- **Tema y tokens de diseño**: Configurar en `client/global.css`
+- **Componentes UI**: Biblioteca pre-construida en `client/components/ui/`
+- **Utilidad**: La función `cn()` combina `clsx` + `tailwind-merge` para clases condicionales
 
 ```typescript
-// cn utility usage
+// uso de utilidad cn
 className={cn(
-  "base-classes",
-  { "conditional-class": condition },
-  props.className  // User overrides
+  "clases-base",
+  { "clase-condicional": condicion },
+  props.className  // Sobrescrituras del usuario
 )}
 ```
 
-### Express Server Integration
+### Integración del Servidor Express
 
-- **Development**: Single port (8080) for both frontend/backend
-- **Hot reload**: Both client and server code
-- **API endpoints**: Prefixed with `/api/`
+- **Desarrollo**: Puerto único (8080) para frontend/backend
+- **Hot reload**: Código tanto del cliente como del servidor
+- **Endpoints API**: Con prefijo `/api/`
 
-#### Example API Routes
-- `GET /api/ping` - Simple ping api
-- `GET /api/demo` - Demo endpoint  
+#### Ejemplos de Rutas API
 
-### Shared Types
-Import consistent types in both client and server:
+- `GET /api/ping` - API ping simple
+- `GET /api/demo` - Endpoint de demostración
+
+### Tipos Compartidos
+
+Importa tipos consistentes en cliente y servidor:
+
 ```typescript
-import { DemoResponse } from '@shared/api';
+import { DemoResponse } from "@shared/api";
 ```
 
-Path aliases:
-- `@shared/*` - Shared folder
-- `@/*` - Client folder
+Alias de rutas:
 
-## Development Commands
+- `@shared/*` - Carpeta compartida
+- `@/*` - Carpeta del cliente
+
+## Comandos de Desarrollo
 
 ```bash
-npm run dev        # Start dev server (client + server)
-npm run build      # Production build
-npm run start      # Start production server
-npm run typecheck  # TypeScript validation
-npm test          # Run Vitest tests
+npm run dev        # Iniciar servidor de desarrollo (cliente + servidor)
+npm run build      # Build de producción
+npm run start      # Iniciar servidor de producción
+npm run typecheck  # Validación de TypeScript
+npm test          # Ejecutar pruebas Vitest
 ```
 
-## Adding Features
+## Agregar Funcionalidades
 
-### Add new colors to the theme
+### Agregar nuevos colores al tema
 
-Open `client/global.css` and `tailwind.config.ts` and add new tailwind colors.
+Abre `client/global.css` y `tailwind.config.ts` y agrega nuevos colores de tailwind.
 
-### New API Route
-1. **Optional**: Create a shared interface in `shared/api.ts`:
+### Nueva Ruta API
+
+1. **Opcional**: Crea una interfaz compartida en `shared/api.ts`:
+
 ```typescript
 export interface MyRouteResponse {
   message: string;
-  // Add other response properties here
+  // Agregar otras propiedades de respuesta aquí
 }
 ```
 
-2. Create a new route handler in `server/routes/my-route.ts`:
+2. Crea un nuevo manejador de ruta en `server/routes/my-route.ts`:
+
 ```typescript
 import { RequestHandler } from "express";
-import { MyRouteResponse } from "@shared/api"; // Optional: for type safety
+import { MyRouteResponse } from "@shared/api"; // Opcional: para seguridad de tipos
 
 export const handleMyRoute: RequestHandler = (req, res) => {
   const response: MyRouteResponse = {
-    message: 'Hello from my endpoint!'
+    message: "¡Hola desde mi endpoint!",
   };
   res.json(response);
 };
 ```
 
-3. Register the route in `server/index.ts`:
+3. Registra la ruta en `server/index.ts`:
+
 ```typescript
 import { handleMyRoute } from "./routes/my-route";
 
-// Add to the createServer function:
+// Agregar a la función createServer:
 app.get("/api/my-endpoint", handleMyRoute);
 ```
 
-4. Use in React components with type safety:
-```typescript
-import { MyRouteResponse } from '@shared/api'; // Optional: for type safety
+4. Usar en componentes React con seguridad de tipos:
 
-const response = await fetch('/api/my-endpoint');
+```typescript
+import { MyRouteResponse } from "@shared/api"; // Opcional: para seguridad de tipos
+
+const response = await fetch("/api/my-endpoint");
 const data: MyRouteResponse = await response.json();
 ```
 
-### New Page Route
-1. Create component in `client/pages/MyPage.tsx`
-2. Add route in `client/main.tsx`:
+### Nueva Ruta de Página
+
+1. Crear componente en `client/pages/MyPage.tsx`
+2. Agregar ruta en `client/main.tsx`:
+
 ```typescript
 <Route path="/my-page" element={<MyPage />} />
 ```
 
-## Production Deployment
+## Despliegue en Producción
 
-- **Standard**: `npm run build` + `npm start`
-- **Docker**: Dockerfile included
-- **Binary**: Self-contained executables (Linux, macOS, Windows)
-- Express serves the built React SPA with fallback routing support
+- **Estándar**: `npm run build` + `npm start`
+- **Docker**: Dockerfile incluido
+- **Binario**: Ejecutables autocontenidos (Linux, macOS, Windows)
+- Express sirve el React SPA construido con soporte de enrutamiento de respaldo
 
-## Architecture Notes
+## Notas de Arquitectura
 
-- Single-port development with Vite + Express integration
-- TypeScript throughout (client, server, shared)
-- Full hot reload for rapid development
-- Production-ready with multiple deployment options
-- Comprehensive UI component library included
-- Type-safe API communication via shared interfaces
+- Desarrollo de puerto único con integración Vite + Express
+- TypeScript en todo (cliente, servidor, compartido)
+- Hot reload completo para desarrollo rápido
+- Listo para producción con múltiples opciones de despliegue
+- Biblioteca completa de componentes UI incluida
+- Comunicación API con seguridad de tipos vía interfaces compartidas
