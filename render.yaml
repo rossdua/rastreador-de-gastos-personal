@@ -20,9 +20,13 @@ services:
     name: rastreador-gastos-db
     plan: free
     region: oregon
-    databaseName: gastos_db
+    databaseName: gastos_db_k2w7
     databaseUser: gastos_user
-    ipAllowList: []
+    ipAllowList: 
+    - source: 0.0.0.0/0
+      description: everywhere
+    postgresMajorVersion: "16"
+  version: "1"
 
 # Variables de entorno globales (opcionales)
 envVarGroups:
