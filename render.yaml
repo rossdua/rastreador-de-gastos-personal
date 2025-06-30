@@ -22,10 +22,8 @@ databases:
     user: gastos_user
     ipAllowList: []
 
-envVarGroups:
-  - name: app-settings
-    envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: rastreador-gastos-db
-          property: connectionString
+envVars:
+   - key: DATABASE_URL
+      fromDatabase:
+        name: rastreador-gastos-db
+        property: connectionString
