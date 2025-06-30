@@ -42,8 +42,8 @@ export default function Index() {
       setLastPage(paginatedData.lastPage);
     } catch (error) {
       console.error("Error al obtener gastos:", error);
-      // Simulamos datos para testing ya que no hay backend
-      setExpenses([
+      // Simulamos datos con paginación para testing ya que no hay backend
+      const allExpenses = [
         {
           id: 1,
           amount: 25.5,
@@ -62,9 +62,70 @@ export default function Index() {
           description: "Compras del supermercado",
           dateRecorded: new Date(Date.now() - 86400000).toISOString(),
         },
-      ]);
-      setTotalItemsGlobal(3);
-      setLastPage(1);
+        {
+          id: 4,
+          amount: 75.0,
+          description: "Gasolina",
+          dateRecorded: new Date(Date.now() - 172800000).toISOString(),
+        },
+        {
+          id: 5,
+          amount: 35.0,
+          description: "Café",
+          dateRecorded: new Date(Date.now() - 259200000).toISOString(),
+        },
+        {
+          id: 6,
+          amount: 200.0,
+          description: "Cena en restaurante",
+          dateRecorded: new Date(Date.now() - 345600000).toISOString(),
+        },
+        {
+          id: 7,
+          amount: 150.0,
+          description: "Compras en línea",
+          dateRecorded: new Date(Date.now() - 432000000).toISOString(),
+        },
+        {
+          id: 8,
+          amount: 60.0,
+          description: "Taxi",
+          dateRecorded: new Date(Date.now() - 518400000).toISOString(),
+        },
+        {
+          id: 9,
+          amount: 90.0,
+          description: "Farmacia",
+          dateRecorded: new Date(Date.now() - 604800000).toISOString(),
+        },
+        {
+          id: 10,
+          amount: 180.0,
+          description: "Supermercado",
+          dateRecorded: new Date(Date.now() - 691200000).toISOString(),
+        },
+        {
+          id: 11,
+          amount: 40.0,
+          description: "Desayuno",
+          dateRecorded: new Date(Date.now() - 777600000).toISOString(),
+        },
+        {
+          id: 12,
+          amount: 250.0,
+          description: "Reparación auto",
+          dateRecorded: new Date(Date.now() - 864000000).toISOString(),
+        },
+      ];
+
+      // Simulamos paginación
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedExpenses = allExpenses.slice(startIndex, endIndex);
+
+      setExpenses(paginatedExpenses);
+      setTotalItemsGlobal(allExpenses.length);
+      setLastPage(Math.ceil(allExpenses.length / itemsPerPage));
     } finally {
       setIsLoading(false);
     }
