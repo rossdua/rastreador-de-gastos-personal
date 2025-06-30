@@ -14,8 +14,8 @@ services:
     healthCheckPath: /
     autoDeploy: true
 
-  - type: pserv
-    name: rastreador-gastos-db
+databases:
+  - name: rastreador-gastos-db
     plan: free
     region: oregon
     databaseName: gastos_db_k2w7
