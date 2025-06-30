@@ -19,12 +19,12 @@ databases:
     plan: free
     region: oregon
     databaseName: gastos_db_k2w7
-    databaseUser: gastos_user
+    user: gastos_user
     ipAllowList: 
     - source: 0.0.0.0/0
       description: everywhere
-      postgresMajorVersion: "16"
-      version: "1"
+    postgresMajorVersion: "16"
+  version: "1"
 
 envVarGroups:
   - name: app-settings
