@@ -20,10 +20,7 @@ databases:
     region: oregon
     databaseName: gastos_db_k2w7
     user: gastos_user
-    ipAllowList: 
-    - source: 0.0.0.0/0
-      description: everywhere
-    postgresMajorVersion: "16"
+    ipAllowList: []
 
 envVarGroups:
   - name: app-settings
