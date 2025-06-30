@@ -209,8 +209,40 @@ export default function Index() {
     if (!window.confirm("¿Estás seguro de que quieres eliminar este gasto?")) {
       return;
     }
-    setExpenses((prev) => prev.filter((expense) => expense.id !== id));
-    setTotalItemsGlobal((prev) => prev - 1);
+
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Si se eliminó el único elemento de la página actual y no estamos en la primera,
+      // retrocede a la página anterior para evitar una página vacía.
+      if (filteredExpenses.length === 1 && currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      } else {
+        fetchExpenses(); // Recarga los gastos de la página actual
+      }
+    } catch (error) {
+      console.error("Error al eliminar gasto:", error);
+      // Fallback: eliminar localmente si no hay backend
+      setExpenses((prev) => prev.filter((expense) => expense.id !== id));
+      setTotalItemsGlobal((prev) => {
+        const newTotal = prev - 1;
+        const newLastPage = Math.ceil(newTotal / itemsPerPage);
+        setLastPage(newLastPage);
+
+        // Si estamos en una página que ya no existe después de eliminar
+        if (currentPage > newLastPage && newLastPage > 0) {
+          setCurrentPage(newLastPage);
+        }
+
+        return newTotal;
+      });
+    }
   };
 
   return (
